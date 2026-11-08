@@ -56,6 +56,8 @@ def create_dispatcher(settings: Settings, session_pool: async_sessionmaker[Async
 
 async def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    # Планировщик пишет INFO на каждый запуск задачи (раз в минуту) и забивает логи — оставляем только проблемы
+    logging.getLogger("apscheduler").setLevel(logging.WARNING)
     settings = Settings()
 
     # Alembic внутри вызывает asyncio.run, поэтому запускаем его в отдельном потоке
